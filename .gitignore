@@ -1,3 +1,7 @@
+# Ignore temporary fuse files
+.fuse_hidden*
+
+# Ignore binaries
 a
 app
 *.out
