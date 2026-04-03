@@ -3,34 +3,47 @@
 
 int main(){
 
-    /* Q1 */
-    int arr[]={5,2,9,1};
-    sort_ascending(arr,4);
-    assert(arr[0]==1 && arr[3]==9);
+    /* Sorting */
+    int a[]={5,2,9,1};
+    sort_ascending(a,4);
+    assert(a[0]==1 && a[3]==9);
 
-    /* Q2 */
-    int a=10,b=20;
-    swap(&a,&b);
-    assert(a==20 && b==10);
+    /* Swap */
+    int x=10,y=20;
+    swap(&x,&y);
+    assert(x==20 && y==10);
 
-    /* Q3 */
+    /* Max Min */
     int max,min;
-    find_max_min(arr,4,&max,&min);
+    find_max_min(a,4,&max,&min);
     assert(max==9 && min==1);
 
-    /* Q6 */
-    assert(linear_search(arr,4,9)!=-1);
+    /* Remove duplicates */
+    int d[]={1,2,2,3,1};
+    int new_size=remove_duplicates(d,5);
+    assert(new_size==3);
 
-    /* Q7 */
-    assert(binary_search(arr,4,9)!=-1);
+    /* Search */
+    assert(linear_search(a,4,9)!=-1);
+    assert(binary_search(a,4,9)!=-1);
 
-    /* Q8 */
-    int arr2[]={4,5,2};
-    assert(sum_of_products(arr2,3)==(4*5+5*2));
+    /* Sum product */
+    int sp[]={4,5,2};
+    assert(sum_of_products(sp,3)==30);
 
     /* String */
     char s[]="madam";
     assert(is_palindrome_str(s)==1);
+
+    char str1[20]="hi";
+    concat_strings(str1,"test");
+    assert(str_length(str1)==6);
+
+    /* Matrix */
+    int mat[5][5], t[5][5];
+    create_matrix(mat);
+    transpose(mat,t);
+    assert(mat[0][1]==t[1][0]);
 
     /* Recursion */
     assert(power(2,3)==8);

@@ -1,6 +1,11 @@
 #include "day3_4.h"
 
-/* Q1 Sorting */
+/* Swap */
+void swap(int *a,int *b){
+    int t=*a; *a=*b; *b=t;
+}
+
+/* Sorting */
 void sort_ascending(int arr[], int size){
     for(int i=0;i<size-1;i++)
         for(int j=i+1;j<size;j++)
@@ -15,14 +20,7 @@ void sort_descending(int arr[], int size){
                 swap(&arr[i],&arr[j]);
 }
 
-/* Q2 */
-void swap(int *a,int *b){
-    int temp=*a;
-    *a=*b;
-    *b=temp;
-}
-
-/* Q3 */
+/* Max Min */
 void find_max_min(int arr[], int size, int *max, int *min){
     *max=*min=arr[0];
     for(int i=1;i<size;i++){
@@ -31,58 +29,52 @@ void find_max_min(int arr[], int size, int *max, int *min){
     }
 }
 
-/* Q4 */
+/* Helper */
 int exists(int arr[], int size, int val){
     for(int i=0;i<size;i++)
         if(arr[i]==val) return 1;
     return 0;
 }
 
-void set_union(int A[], int sizeA, int B[], int sizeB, int result[], int *res_size){
-    int k=0;
-    for(int i=0;i<sizeA;i++) result[k++]=A[i];
-    for(int i=0;i<sizeB;i++)
-        if(!exists(result,k,B[i]))
-            result[k++]=B[i];
-    *res_size=k;
+/* Set */
+void set_union(int A[], int n, int B[], int m, int R[], int *k){
+    *k=0;
+    for(int i=0;i<n;i++)
+        if(!exists(R,*k,A[i])) R[(*k)++]=A[i];
+    for(int i=0;i<m;i++)
+        if(!exists(R,*k,B[i])) R[(*k)++]=B[i];
 }
 
-void set_intersection(int A[], int sizeA, int B[], int sizeB, int result[], int *res_size){
-    int k=0;
-    for(int i=0;i<sizeA;i++)
-        if(exists(B,sizeB,A[i]))
-            result[k++]=A[i];
-    *res_size=k;
+void set_intersection(int A[], int n, int B[], int m, int R[], int *k){
+    *k=0;
+    for(int i=0;i<n;i++)
+        if(exists(B,m,A[i]) && !exists(R,*k,A[i]))
+            R[(*k)++]=A[i];
 }
 
-void set_difference(int A[], int sizeA, int B[], int sizeB, int result[], int *res_size){
-    int k=0;
-    for(int i=0;i<sizeA;i++)
-        if(!exists(B,sizeB,A[i]))
-            result[k++]=A[i];
-    *res_size=k;
+void set_difference(int A[], int n, int B[], int m, int R[], int *k){
+    *k=0;
+    for(int i=0;i<n;i++)
+        if(!exists(B,m,A[i]))
+            R[(*k)++]=A[i];
 }
 
-/* Q5 */
+/* Remove duplicates */
 int remove_duplicates(int arr[], int size){
     int k=0;
-    for(int i=0;i<size;i++){
-        int flag=0;
-        for(int j=0;j<k;j++)
-            if(arr[i]==arr[j]) flag=1;
-        if(!flag) arr[k++]=arr[i];
-    }
+    for(int i=0;i<size;i++)
+        if(!exists(arr,k,arr[i]))
+            arr[k++]=arr[i];
     return k;
 }
 
-/* Q6 */
+/* Search */
 int linear_search(int arr[], int size, int key){
     for(int i=0;i<size;i++)
         if(arr[i]==key) return i;
     return -1;
 }
 
-/* Q7 */
 int binary_search(int arr[], int size, int key){
     int l=0,r=size-1;
     while(l<=r){
@@ -94,7 +86,7 @@ int binary_search(int arr[], int size, int key){
     return -1;
 }
 
-/* Q8 */
+/* Sum of products */
 int sum_of_products(int arr[], int size){
     int sum=0;
     for(int i=0;i<size-1;i++)
@@ -103,51 +95,56 @@ int sum_of_products(int arr[], int size){
 }
 
 /* Strings */
-int str_length(char str[]){
-    int i=0;
-    while(str[i]!='\0') i++;
-    return i;
+int str_length(char s[]){
+    int i=0; while(s[i]) i++; return i;
 }
 
-void to_uppercase(char str[]){
-    for(int i=0;str[i];i++)
-        if(str[i]>='a'&&str[i]<='z')
-            str[i]-=32;
+void to_uppercase(char s[]){
+    for(int i=0;s[i];i++)
+        if(s[i]>='a'&&s[i]<='z')
+            s[i]-=32;
 }
 
-void reverse_string(char str[]){
-    int len=str_length(str);
-    for(int i=0;i<len/2;i++)
-        swap((int*)&str[i],(int*)&str[len-i-1]);
+void reverse_string(char s[]){
+    int n=str_length(s);
+    for(int i=0;i<n/2;i++){
+        char t=s[i];
+        s[i]=s[n-i-1];
+        s[n-i-1]=t;
+    }
 }
 
-int is_palindrome_str(char str[]){
-    int len=str_length(str);
-    for(int i=0;i<len/2;i++)
-        if(str[i]!=str[len-i-1]) return 0;
+int is_palindrome_str(char s[]){
+    int n=str_length(s);
+    for(int i=0;i<n/2;i++)
+        if(s[i]!=s[n-i-1]) return 0;
     return 1;
 }
 
-void concat_strings(char dest[], char src[]){
-    int i=str_length(dest),j=0;
-    while(src[j]) dest[i++]=src[j++];
-    dest[i]='\0';
+void concat_strings(char d[], char s[]){
+    int i=str_length(d), j=0;
+    while(s[j]) d[i++]=s[j++];
+    d[i]='\0';
+}
+
+/* Date */
+void print_date(int d,int m,int y){
+    char *months[]={"","January","February","March","April","May","June","July","August","September","October","November","December"};
+
+    char *suffix="th";
+    if(d==1||d==21||d==31) suffix="st";
+    else if(d==2||d==22) suffix="nd";
+    else if(d==3||d==23) suffix="rd";
+
+    printf("%d%s %s, %d\n",d,suffix,months[m],y);
 }
 
 /* Matrix */
 void create_matrix(int mat[5][5]){
-    int val=1;
+    int v=1;
     for(int i=0;i<5;i++)
         for(int j=0;j<5;j++)
-            mat[i][j]=val++;
-}
-
-void display_matrix(int mat[5][5]){
-    for(int i=0;i<5;i++){
-        for(int j=0;j<5;j++)
-            printf("%d ",mat[i][j]);
-        printf("\n");
-    }
+            mat[i][j]=v++;
 }
 
 void transpose(int mat[5][5], int res[5][5]){
@@ -165,11 +162,11 @@ void column_sum(int mat[][10], int r,int c,int res[]){
 }
 
 int is_sparse(int mat[][10], int r,int c){
-    int zero=0;
+    int z=0;
     for(int i=0;i<r;i++)
         for(int j=0;j<c;j++)
-            if(mat[i][j]==0) zero++;
-    return zero>(r*c)/2;
+            if(mat[i][j]==0) z++;
+    return z>(r*c)/2;
 }
 
 /* Recursion */
