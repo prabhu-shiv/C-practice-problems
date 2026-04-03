@@ -44,7 +44,8 @@ int is_even(const int input)
 
 int is_leapYear(const int input)
 {
-    return !(input%4);
+    //return !(input%4);
+    return !(year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
 
