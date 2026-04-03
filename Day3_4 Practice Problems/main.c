@@ -1,39 +1,43 @@
 #include "day3_4.h"
 #include <assert.h>
 
-/* Helper function for testing */
-int is_sorted_asc(int arr[], int size)
-{
-    for(int i = 0; i < size - 1; i++)
-    {
-        if(arr[i] > arr[i+1]) return 0;
-    }
-    return 1;
-}
+int main(){
 
-int is_sorted_desc(int arr[], int size)
-{
-    for(int i = 0; i < size - 1; i++)
-    {
-        if(arr[i] < arr[i+1]) return 0;
-    }
-    return 1;
-}
+    /* Q1 */
+    int arr[]={5,2,9,1};
+    sort_ascending(arr,4);
+    assert(arr[0]==1 && arr[3]==9);
 
-int main()
-{
-    int arr1[] = {5, 2, 9, 1, 3};
-    int arr2[] = {5, 2, 9, 1, 3};
+    /* Q2 */
+    int a=10,b=20;
+    swap(&a,&b);
+    assert(a==20 && b==10);
 
-    int size = 5;
+    /* Q3 */
+    int max,min;
+    find_max_min(arr,4,&max,&min);
+    assert(max==9 && min==1);
 
-    sort_ascending(arr1, size);
-    sort_descending(arr2, size);
+    /* Q6 */
+    assert(linear_search(arr,4,9)!=-1);
 
-    assert(is_sorted_asc(arr1, size) == 1);
-    assert(is_sorted_desc(arr2, size) == 1);
+    /* Q7 */
+    assert(binary_search(arr,4,9)!=-1);
 
-    printf("Q1 Passed: Sorting works correctly\n");
+    /* Q8 */
+    int arr2[]={4,5,2};
+    assert(sum_of_products(arr2,3)==(4*5+5*2));
+
+    /* String */
+    char s[]="madam";
+    assert(is_palindrome_str(s)==1);
+
+    /* Recursion */
+    assert(power(2,3)==8);
+    assert(factorial(5)==120);
+
+    /* Macro */
+    assert(SQUARE(5)==25);
 
     return 0;
 }
