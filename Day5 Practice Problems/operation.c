@@ -1,6 +1,7 @@
 #include "day5.h"
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 /* ================= Q1 ================= */
 void input_students(struct Student s[], int n){
@@ -122,7 +123,8 @@ void play_game(){
             p2 = ladders(snakes(p2));
         }
 
-        printf("P1:%d P2:%d\n",p1,p2);
+        printf("P1: %d | P2: %d\n", p1, p2);
+        sleep(2);
     }
 
     if(p1==100) printf("Player wins\n");
